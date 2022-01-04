@@ -70,12 +70,12 @@ def main(cfg: DictConfig) -> None:
         set_random_seed(SEED)
 
         train_dataset = LitDataset(
-            train_df[train_df["Fold_stratified_url"] != i],
+            train_df[train_df[cfg.fold_name] != i],
             tokenizer=tokenizer,
             max_length=MAX_LEN,
         )    
         val_dataset = LitDataset(
-            train_df[train_df["Fold_stratified_url"] == i],
+            train_df[train_df[cfg.fold_name] == i],
             tokenizer=tokenizer,
             max_length=MAX_LEN,
         )    

@@ -18,6 +18,7 @@ batch_size: 8
 max_len: 256
 epochs: 3
 nfolds: 5
+fold_name: "Fold_stratified_url"
 seed: 1000
 
 
