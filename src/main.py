@@ -101,7 +101,6 @@ def main(cfg: DictConfig) -> None:
             is_lg_model=False
         ).to(DEVICE)
 
-        model_output_path = MODEL_OUTPUT_DIR / f"model_{i + 1}.pth"
         optimizer = create_optimizer(model, cfg)                        
         scheduler = get_cosine_schedule_with_warmup(
             optimizer,
