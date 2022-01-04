@@ -20,13 +20,15 @@ epochs: 3
 nfolds: 5
 seed: 1000
 
-# TODO local実行とcolab実行を切り分ける
-# TODO google driveに直接outputするためのパスを考える
-# hydra:
-#   run:
-#     dir: "/content/drive/MyDrive/kaggle/commonlit_readability/outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}"
+
+# ログの出力先のディレクトリ名を変更(実行時引数を結合)
+hydra:
+  run:
+    dir: outputs/${hydra.job.override_dirname}
+    # colabで実行する場合はGoogle Driveをマウントして以下のディレクトリを指定する
+    # dir: /content/drive/MyDrive/kaggle/commonlit_readability/outputs/${hydra.job.override_dirname}
 
 
 defaults:
   - _self_
-  - dataset: large
+  - ml_model: nn
