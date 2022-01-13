@@ -99,7 +99,7 @@ def main(cfg: DictConfig):
         "rbt_lg1_pred.csv",
         "eltr_lg1_pred.csv",
         "dbt_lg_pred.csv",
-        "yrk_lg2_pred.csv"
+        "cta_lg2_pred.csv"
     ]
     merge_df_lg = base_df.copy()
     for p in path_list_lg:
@@ -113,8 +113,8 @@ def main(cfg: DictConfig):
         "rbt-bs-strat-url-16-256.csv",
         "eltr-bs-strat-url-16-256.csv",
         "dbt-bs-strat-url-16-256.csv",
-        "rbt-bs-yrk-all-url-16-256.csv",
-        "dbt-bs-yrk-all-strat-url-16-256.csv",
+        "rbt-bs-cta-all-url-16-256.csv",
+        "dbt-bs-cta-all-strat-url-16-256.csv",
     ]
     merge_df_bs = base_df.copy()
     for p in path_list_bs:

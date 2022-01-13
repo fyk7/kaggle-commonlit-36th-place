@@ -350,7 +350,7 @@ eltr_bs_strat_url_pred = preds.mean(axis=0)
 
 BATCH_SIZE=16
 BASE_MODEL_PATH = "../input/roberta-base"
-FT_MODEL_PATH = "../input/rbt-bs-yrk-all-url-16-256"
+FT_MODEL_PATH = "../input/rbt-bs-cta-all-url-16-256"
 tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL_PATH)
 
 class LitDataset(Dataset):
@@ -382,7 +382,7 @@ class LitDataset(Dataset):
             target = self.target[index]
             return (input_ids, atten_mask, target)
 
-class YorkoBaseModel(nn.Module):
+class ClsTokenAvgBaseModel(nn.Module):
     def __init__(self):
         super().__init__()
 
@@ -419,14 +419,14 @@ preds = np.zeros((NUM_FOLDS, len(test_dataset)))
 for idx in range(NUM_FOLDS):
     model_path = f"{FT_MODEL_PATH}/model-{idx+1}.pth"
     print(model_path)
-    model = YorkoBaseModel()
+    model = ClsTokenAvgBaseModel()
     model.load_state_dict(torch.load(model_path, map_location=DEVICE))
     model.to(DEVICE)
     preds[idx] = predict(model, test_loader)
     del model;gc.collect()
 
 del test_dataset, test_loader, tokenizer;gc.collect()
-rbt_bs_yrk_strat_url_pred = preds.mean(axis=0)
+rbt_bs_cta_strat_url_pred = preds.mean(axis=0)
 
 
 
@@ -434,7 +434,7 @@ rbt_bs_yrk_strat_url_pred = preds.mean(axis=0)
 
 BATCH_SIZE=16
 BASE_MODEL_PATH = "../input/google-electra-base-discriminator"
-FT_MODEL_PATH = "../input/dbt-bs-yrk-all-strat-url-16-25"
+FT_MODEL_PATH = "../input/dbt-bs-cta-all-strat-url-16-25"
 tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL_PATH)
 
 class LitDataset(Dataset):
@@ -466,7 +466,7 @@ class LitDataset(Dataset):
             target = self.target[index]
             return (input_ids, atten_mask, target)
 
-class YorkoBaseModel(nn.Module):
+class ClsTokenAvgBaseModel(nn.Module):
     def __init__(self):
         super().__init__()
 
@@ -503,14 +503,14 @@ preds = np.zeros((NUM_FOLDS, len(test_dataset)))
 for idx in range(NUM_FOLDS):
     model_path = f"{FT_MODEL_PATH}/model-{idx+1}.pth"
     print(model_path)
-    model = YorkoBaseModel()
+    model = ClsTokenAvgBaseModel()
     model.load_state_dict(torch.load(model_path, map_location=DEVICE))
     model.to(DEVICE)
     preds[idx] = predict(model, test_loader)
     del model;gc.collect()
 
 del test_dataset, test_loader, tokenizer;gc.collect()
-eltr_bs_yrk_strat_url_pred = preds.mean(axis=0)
+eltr_bs_cta_strat_url_pred = preds.mean(axis=0)
 
 
 
@@ -910,7 +910,7 @@ del test_dataset, test_loader, tokenizer;gc.collect()
 dbt_lg_strat_url_v2_pred = preds.mean(axis=0)
 
 BASE_MODEL_PATH = "../input/robertalarge"
-FT_MODEL_PATH = "../input/yrk-lg-after18-8-256"
+FT_MODEL_PATH = "../input/cta-lg-after18-8-256"
 tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL_PATH)
 
 class LitDataset(Dataset):
@@ -941,7 +941,7 @@ class LitDataset(Dataset):
             target = self.target[index]
             return (input_ids, atten_mask, target)
 
-class YorkoModel2(nn.Module):
+class ClsTokenAvgModel2(nn.Module):
     def __init__(self):
         super().__init__()
         config = AutoConfig.from_pretrained(BASE_MODEL_PATH)
@@ -980,14 +980,14 @@ preds = np.zeros((NUM_FOLDS, len(test_dataset)))
 for idx in range(NUM_FOLDS):
     model_path = f"{FT_MODEL_PATH}/model-{idx+1}.pth"
     print(model_path)
-    model = YorkoModel2()
+    model = ClsTokenAvgModel2()
     model.load_state_dict(torch.load(model_path, map_location=DEVICE))
     model.to(DEVICE)
     preds[idx] = predict(model, test_loader)
     del model;gc.collect()
 
 del test_dataset, test_loader, tokenizer;gc.collect()
-yrk_lg_strat_url_pred = preds.mean(axis=0)
+cta_lg_strat_url_pred = preds.mean(axis=0)
 
 # 0.23922778 0.40651899 0.2204791  0.09009821 0.04367593
 
@@ -996,14 +996,14 @@ sub_df["target"] = \
     (rbt_bs_prtr_pred * 0.9 + rbt_bs_strat_url_pred * 0.1) * 0.8 +
     dbt_bs_strat_url_pred * 0.08 +
     eltr_bs_strat_url_pred * 0.08 +
-    rbt_bs_yrk_strat_url_pred * 0.02 +
-    eltr_bs_yrk_strat_url_pred * 0.02
+    rbt_bs_cta_strat_url_pred * 0.02 +
+    eltr_bs_cta_strat_url_pred * 0.02
 ) * 0.16 + \
 (
     (rbt_lg_strat_url_pred * 0.9 + rbt_lg_strat_url_v2_pred * 0.1) * 0.25 +
     eltr_lg_strat_url_pred * 0.25 +
     (dbt_lg_strat_url_pred * 0.1 + dbt_lg_strat_url_v2_pred * 0.9) * 0.40 +
-    yrk_lg_strat_url_pred * 0.1
+    cta_lg_strat_url_pred * 0.1
 ) * 0.84
 
 sub_df.to_csv("submission.csv", index=False)

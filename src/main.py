@@ -13,7 +13,7 @@ from torch.utils.data import DataLoader
 from transformers import AutoTokenizer, get_cosine_schedule_with_warmup
 
 from dataset import LitDataset
-from models import LitModel, CustomModel, create_optimizer
+from models import LitModel, ClsTokenAvgModel, create_optimizer
 from trainer import train
 
 

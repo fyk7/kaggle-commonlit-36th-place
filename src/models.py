@@ -61,7 +61,7 @@ class LitModel(nn.Module):
         return self.regressor(context_vector)
 
 
-class CustomModel(nn.Module):
+class ClsTokenAvgModel(nn.Module):
     def __init__(
         self,
         huggingface_model_path: str,
