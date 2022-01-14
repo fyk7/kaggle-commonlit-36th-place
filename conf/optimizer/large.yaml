@@ -1,0 +1,9 @@
+atten_param_start: 391
+regressor_param_start: 395
+atten_lr: "1e-4"
+reg_lr: "1e-4"
+bert_mid_level_layer_start: 197
+bert_high_level_layer_start: 293
+bert_low_layer_lr: "2e-5"
+bert_mid_layer_lr: "5e-5"
+bert_high_layer_lr: "7e-5"

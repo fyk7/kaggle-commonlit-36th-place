@@ -4,16 +4,6 @@ job_name: 'roberta-base-demo'
 model_class: 'LitModel'
 model_path: "roberta-base"
 tokenizer_path: "roberta-base"
-optimizer:
-  atten_param_start: 199
-  regressor_param_start: 203
-  atten_lr: "1e-4"
-  reg_lr: "1e-4"
-  bert_mid_level_layer_start: 69
-  bert_high_level_layer_start: 133
-  bert_low_layer_lr: "1e-5"
-  bert_mid_layer_lr: "2e-5"
-  bert_high_layer_lr: "2e-5"
 batch_size: 8
 max_len: 256
 epochs: 3
@@ -32,4 +22,4 @@ hydra:
 
 defaults:
   - _self_
-  - ml_model: nn
+  - optimizer: base
