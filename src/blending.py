@@ -41,14 +41,14 @@ class CustomObjective(object):
 
 
 def get_best_weight(
-    Customobjective,
+    objective: CustomObjective,
     n_trials: int = 200,
     n_jobs: int = 1,
     seed: int = 88
 ) -> t.Tuple[np.array, float]:
     sampler = optuna.samplers.TPESampler(seed=seed)
     study = optuna.create_study(sampler=sampler)
-    study.optimize(Customobjective, n_trials=n_trials, n_jobs=n_jobs)
+    study.optimize(objective, n_trials=n_trials, n_jobs=n_jobs)
 
     best_w = list(study.best_params.values())
     best_w = np.array(best_w) / np.sum(best_w)
@@ -91,7 +91,7 @@ def main(cfg: DictConfig):
     )
     base_df = base_df.reset_index(drop=True)
 
-    blend_material_path_lg = OUTPUT_DIR / "commonlit_blending_material_v3"
+    blend_material_path_lg = OUTPUT_DIR / "commonlit_blending_material_lg"
     blend_material_path_bs = OUTPUT_DIR / "commonlit_blending_material_bs"
 
     # TODO configから渡す
