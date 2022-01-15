@@ -15,7 +15,7 @@ seed: 1000
 # ログの出力先のディレクトリ名を変更(実行時引数を結合)
 hydra:
   run:
-    dir: outputs/${hydra.job.name}/${hydra.job.override_dirname}
+    dir: output/${hydra.job.name}/${hydra.job.override_dirname}
     # colabで実行する場合はGoogle Driveをマウントして以下のディレクトリを指定する
     # dir: /content/drive/MyDrive/kaggle/commonlit_readability/outputs/${hydra.job.override_dirname}
 
