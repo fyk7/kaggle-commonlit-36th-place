@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel("DEBUG")
 
 
-def set_random_seed(random_seed: int):
+def set_random_seed(random_seed: int) -> None:
     random.seed(random_seed)
     np.random.seed(random_seed)
     os.environ["PYTHONHASHSEED"] = str(random_seed)
@@ -96,10 +96,13 @@ def main(cfg: DictConfig) -> None:
         )    
             
         logger.info("Start to load BERT Model")
-        model = eval(MODEL_CLASS)(
-            huggingface_model_path=MODEL_PATH,
-            is_lg_model=False
-        ).to(DEVICE)
+        try:
+            model = eval(MODEL_CLASS)(
+                huggingface_model_path=MODEL_PATH,
+                is_lg_model="large" in MODEL_PATH
+            ).to(DEVICE)
+        except:
+            raise(RuntimeError("Model {} not available!".format(MODEL_CLASS)))
 
         optimizer = create_optimizer(model, cfg)                        
         scheduler = get_cosine_schedule_with_warmup(
